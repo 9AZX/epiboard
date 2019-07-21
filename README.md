@@ -1,6 +1,7 @@
 # Epiboard a Dashboard for Epitech intranet
 
-A cross-platform Epitech intranet application in Flutter
+A cross-platform Epitech intranet application in Flutter.
+Base on [this app](https://github.com/DupK/dashboard-epitech).
 
 # TODO
 
