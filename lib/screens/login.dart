@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../api/intra.dart';
+
 class Login extends StatefulWidget {
   Login({Key key}) : super(key: key);
 
@@ -7,6 +9,10 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  void _callIntra(String autolog) {
+    IntraApiService().autologinConnect(autolog);
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -23,15 +29,17 @@ class _LoginState extends State<Login> {
           ),
         ),
         Center(
-            child: TextField(
-          autocorrect: false,
-          decoration: InputDecoration(
-            labelText: 'Enter your autologin link',
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
+          child: TextField(
+            autocorrect: false,
+            decoration: InputDecoration(
+              labelText: 'Enter your autologin link',
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+              ),
             ),
+            onSubmitted: _callIntra,
           ),
-        )),
+        ),
       ],
     ));
   }
