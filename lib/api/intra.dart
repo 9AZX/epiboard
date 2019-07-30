@@ -1,29 +1,28 @@
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
+import 'package:cookie_jar/cookie_jar.dart';
 
 class IntraApiService {
   final _baseUrl = "https://intra.epitech.eu";
-  final _headers = {
-    'Accept': '*/*',
-    'Connection': 'keep-alive',
-    'Cookie':
-        'user=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6Impvbi5paGxhcy1tb3Vlc2NhQGVwaXRlY2guZXUiLCJ0eiI6bnVsbCwiZXhwIjoxNTY0NzYwMDUzfQ.aTGCQ7xtYlOKr-g91vvDBZ4o9gmqPrIvxbF6c5qtsn0'
+  var _headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
   };
+  var dio = new Dio();
 
   Future<bool> autologinConnect(String link) async {
-    final response = await http.get(link, headers: _headers);
-
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      print(response.statusCode);
-      return false;
+    dio.interceptors.add(CookieManager(CookieJar()));
+    print(_headers);
+    try {
+      Response response = await Dio().get(link);
+      print(response);
+    } catch (e) {
+      print(e);
     }
   }
 
   Future<bool> userInfo() async {
-    final response =
-        await http.get(_baseUrl + "/user/?format=json", headers: _headers);
+    final response = await Dio().get(_baseUrl + "/user/?format=json");
 
-    print(response.body);
+    print(response.data);
   }
 }
