@@ -22,7 +22,7 @@ class _Office365State extends State<Office365> {
     flutterWebViewPlugin.close();
 
     _onUrlChanged = flutterWebViewPlugin.onUrlChanged.listen((String url) {
-      if (url.startsWith("https://login.microsoftonline.com/login.srf?")) {
+      if (url == "https://intra.epitech.eu/") {
         flutterWebViewPlugin.close();
         Navigator.pushNamed(context, '/home');
       }
@@ -40,12 +40,13 @@ class _Office365State extends State<Office365> {
   @override
   Widget build(BuildContext context) {
     return WebviewScaffold(
-      url: "https://intra.epitech.eu/",
+      url: "https://intra.epitech.eu/login",
       appBar: new AppBar(
         title: const Text('Connect to office 365'),
       ),
       withLocalStorage: true,
       clearCache: true,
+      clearCookies: true,
       initialChild: Container(
         color: Colors.blueGrey,
         child: const Center(

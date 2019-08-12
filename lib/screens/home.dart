@@ -22,7 +22,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    //_api.userInfo();
+    _api.userInfo();
     return Scaffold(
       body: Center(
         child: Text('Home'),
