@@ -1,28 +1,26 @@
-import 'package:dio/dio.dart';
-import 'package:cookie_jar/cookie_jar.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class IntraApiService {
-  final _baseUrl = "https://intra.epitech.eu";
-  var _headers = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-  };
-  var dio = new Dio();
+  static var _baseUrl = "https://intra.epitech.eu/";
 
-  Future<bool> autologinConnect(String link) async {
-    dio.interceptors.add(CookieManager(CookieJar()));
-    print(_headers);
-    try {
-      Response response = await Dio().get(link);
-      print(response);
-    } catch (e) {
-      print(e);
+  Future<bool> autoLogin(String link) async {
+    final prefs = await SharedPreferences.getInstance();
+    var response = await http.get(link + "/user/?format=json");
+    if (response.statusCode == 200) {
+      prefs.setString('autologin', link);
+      return true;
+    } else {
+      return false;
     }
   }
 
   Future<bool> userInfo() async {
-    final response = await Dio().get(_baseUrl + "/user/?format=json");
+    final prefs = await SharedPreferences.getInstance();
 
-    print(response.data);
+    String autologin = prefs.getString('autologin') ?? false;
+    var response = await http.get(autologin + "/user/?format=json");
+
+    return true;
   }
 }
