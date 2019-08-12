@@ -18,7 +18,7 @@ class _LoginState extends State<Login> {
     IntraApiService().autoLogin(autolog).then((value) {
       if (value) {
         connectionResult = true;
-        Navigator.pushNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/home');
       }
     });
     return connectionResult;
