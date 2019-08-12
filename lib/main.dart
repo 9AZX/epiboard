@@ -12,15 +12,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
-        title: 'Epiboard',
-        theme: ThemeData(
-          primarySwatch: Colors.blueGrey,
-        ),
-        initialRoute: '/',
-        routes: {
-          '/': (context) => Login(),
-          '/office': (context) => Office365(),
-          '/home': (context) => Home(),
-        });
+      title: 'Epiboard',
+      theme: ThemeData(
+        primarySwatch: Colors.blueGrey,
+      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => Login(),
+        '/office': (context) => Office365(),
+        '/home': (context) => Home(),
+      },
+      debugShowCheckedModeBanner: false,
+    );
   }
 }
