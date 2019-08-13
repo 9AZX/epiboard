@@ -4,6 +4,10 @@ A cross-platform Epitech intranet application in Flutter.
 
 Base on [this app](https://github.com/DupK/dashboard-epitech) no longer maintained.
 
+# FEATURES
+
+* Authentification with the **autologin** link
+
 # TODO
 
 * **Authentification with Office 365**
