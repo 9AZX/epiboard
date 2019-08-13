@@ -39,24 +39,23 @@ class _HomeState extends State<Home> {
       child: Scaffold(
         appBar: AppBar(
           elevation: 2.0,
-          backgroundColor: Colors.white,
           title: Text(
             'Epiboard',
-            style: TextStyle(
-                color: Colors.blueGrey,
-                fontWeight: FontWeight.w700,
-                fontSize: 30.0),
+            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 30.0),
           ),
           actions: <Widget>[
             Container(
                 margin: EdgeInsets.only(right: 8.0),
-                child: Icon(Icons.settings, color: Colors.black54)),
+                child: IconButton(
+                  icon: Icon(Icons.settings),
+                  tooltip: "Settings",
+                  onPressed: () => Navigator.pushNamed(context, '/settings'),
+                )),
           ],
         ),
         body: ScopedModelDescendant<StudentInfoModel>(
           builder: (context, child, user) {
             this._user = user;
-
             return FutureBuilder(
               future: refreshUserInfo(),
               builder: (context, snapshot) {
@@ -96,12 +95,12 @@ class _HomeState extends State<Home> {
                     Text(_user.title,
                         style: TextStyle(
                           color: Colors.blueAccent,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 18,
                         )),
-                    Text("Semester ${_user.semester}",
-                        style: TextStyle(
-                          color: Colors.black,
-                        ))
+                    Text(
+                      "Semester ${_user.semester}",
+                    )
                   ],
                 ),
                 ClipRRect(
@@ -124,10 +123,7 @@ class _HomeState extends State<Home> {
                 Padding(padding: EdgeInsets.only(bottom: 16.0)),
                 Text(
                   '${_user.credits} credits',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 34.0),
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 34.0),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -144,10 +140,7 @@ class _HomeState extends State<Home> {
                 Padding(padding: EdgeInsets.only(bottom: 16.0)),
                 Text(
                   '${_user.gpa.single.gpa} GPA',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 34.0),
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 34.0),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -171,9 +164,7 @@ class _HomeState extends State<Home> {
                       children: <Widget>[
                         Text('Upcoming Events',
                             style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 24.0)),
+                                fontWeight: FontWeight.w700, fontSize: 24.0)),
                       ],
                     ),
                   ],
@@ -187,7 +178,7 @@ class _HomeState extends State<Home> {
         StaggeredTile.extent(2, 110.0),
         StaggeredTile.extent(1, 180.0),
         StaggeredTile.extent(1, 180.0),
-        StaggeredTile.extent(2, 220.0),
+        StaggeredTile.extent(2, 100.0),
       ],
     );
   }
@@ -196,7 +187,6 @@ class _HomeState extends State<Home> {
     return Material(
       elevation: 14.0,
       borderRadius: BorderRadius.circular(12.0),
-      shadowColor: Color(0x802196F3),
       child: InkWell(
           onTap: onTap != null
               ? () => onTap()
