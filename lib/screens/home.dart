@@ -19,8 +19,6 @@ class _HomeState extends State<Home> {
 
     _user = StudentInfoModel.fromJson(jsonUser);
     _user.picture = await _api.getAutologin() + _user.picture;
-
-    print(_user.picture);
     return jsonUser;
   }
 
