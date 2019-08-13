@@ -11,6 +11,7 @@ Base on [this app](https://github.com/DupK/dashboard-epitech) no longer maintain
 # TODO
 
 * **Authentification with Office 365**
+* **Dashboard**
 * **Notifications**
 * **Cache system**
 * **Calendar and registration**
@@ -25,6 +26,9 @@ For help getting started with Flutter, view the doc
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+## Contributions
+
+Any contribution is welcome. All issues and pull requests are highly appreciated!
 
 # License
 
