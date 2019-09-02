@@ -23,6 +23,13 @@ class IntraApiService {
     return json.decode(response.body);
   }
 
+  Future<Map<String, dynamic>> generalInfo() async {
+    String autologin = await getAutologin();
+    var response = await http.get(autologin + "/?format=json");
+
+    return json.decode(response.body);
+  }
+
   Future<String> getAutologin() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('autologin') ?? false;
