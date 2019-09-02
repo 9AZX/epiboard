@@ -4,6 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../api/intra.dart';
 import '../models/student.dart';
+import '../models/general.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -13,12 +14,16 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   IntraApiService _api = new IntraApiService();
   StudentInfoModel _user = new StudentInfoModel();
+  GeneralInfoModel _general = new GeneralInfoModel();
 
-  refreshUserInfo() async {
+  refreshInfo() async {
     Map<String, dynamic> jsonUser = await _api.userInfo();
+    Map<String, dynamic> jsonEvent = await _api.generalInfo();
 
     _user = StudentInfoModel.fromJson(jsonUser);
     _user.picture = await _api.getAutologin() + _user.picture;
+    _general = GeneralInfoModel.fromJson(jsonEvent);
+
     return jsonUser;
   }
 
@@ -57,7 +62,7 @@ class _HomeState extends State<Home> {
           builder: (context, child, user) {
             this._user = user;
             return FutureBuilder(
-              future: refreshUserInfo(),
+              future: refreshInfo(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return _dashboard(context);
@@ -162,9 +167,11 @@ class _HomeState extends State<Home> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text('Upcoming Events',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700, fontSize: 24.0)),
+                        Text(
+                          'Next Event',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700, fontSize: 24.0),
+                        ),
                       ],
                     ),
                   ],

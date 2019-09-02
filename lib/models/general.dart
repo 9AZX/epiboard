@@ -139,7 +139,7 @@ class Projets {
   String _timelineStart;
   String _timelineEnd;
   String _timelineBarre;
-  String _dateInscription;
+  bool _dateInscription;
   String _idActivite;
   bool _soutenanceName;
   bool _soutenanceLink;
@@ -152,7 +152,7 @@ class Projets {
       String timelineStart,
       String timelineEnd,
       String timelineBarre,
-      String dateInscription,
+      bool dateInscription,
       String idActivite,
       bool soutenanceName,
       bool soutenanceLink,
@@ -181,8 +181,8 @@ class Projets {
   set timelineEnd(String timelineEnd) => _timelineEnd = timelineEnd;
   String get timelineBarre => _timelineBarre;
   set timelineBarre(String timelineBarre) => _timelineBarre = timelineBarre;
-  String get dateInscription => _dateInscription;
-  set dateInscription(String dateInscription) =>
+  bool get dateInscription => _dateInscription;
+  set dateInscription(bool dateInscription) =>
       _dateInscription = dateInscription;
   String get idActivite => _idActivite;
   set idActivite(String idActivite) => _idActivite = idActivite;
@@ -236,7 +236,7 @@ class Activites {
   String _timelineStart;
   String _timelineEnd;
   String _timelineBarre;
-  bool _dateInscription;
+  var _dateInscription;
   String _salle;
   String _intervenant;
   String _token;
@@ -252,7 +252,7 @@ class Activites {
       String timelineStart,
       String timelineEnd,
       String timelineBarre,
-      bool dateInscription,
+      String dateInscription,
       String salle,
       String intervenant,
       String token,
@@ -290,8 +290,8 @@ class Activites {
   set timelineEnd(String timelineEnd) => _timelineEnd = timelineEnd;
   String get timelineBarre => _timelineBarre;
   set timelineBarre(String timelineBarre) => _timelineBarre = timelineBarre;
-  bool get dateInscription => _dateInscription;
-  set dateInscription(bool dateInscription) =>
+  dynamic get dateInscription => _dateInscription;
+  set dateInscription(var dateInscription) =>
       _dateInscription = dateInscription;
   String get salle => _salle;
   set salle(String salle) => _salle = salle;
