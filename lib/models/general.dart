@@ -70,13 +70,13 @@ class GeneralInfoModel extends Model {
 
 class Board {
   List<Projets> _projets;
-  List<Null> _notes;
+  List<Notes> _notes;
   List<Activites> _activites;
   List<Modules> _modules;
 
   Board(
       {List<Projets> projets,
-      List<Null> notes,
+      List<Notes> notes,
       List<Null> susies,
       List<Activites> activites,
       List<Modules> modules,
@@ -90,8 +90,8 @@ class Board {
 
   List<Projets> get projets => _projets;
   set projets(List<Projets> projets) => _projets = projets;
-  List<Null> get notes => _notes;
-  set notes(List<Null> notes) => _notes = notes;
+  List<Notes> get notes => _notes;
+  set notes(List<Notes> notes) => _notes = notes;
   List<Activites> get activites => _activites;
   set activites(List<Activites> activites) => _activites = activites;
   List<Modules> get modules => _modules;
@@ -102,6 +102,12 @@ class Board {
       _projets = new List<Projets>();
       json['projets'].forEach((v) {
         _projets.add(new Projets.fromJson(v));
+      });
+    }
+    if (json['notes'] != null) {
+      _notes = new List<Notes>();
+      json['notes'].forEach((v) {
+        _notes.add(new Notes.fromJson(v));
       });
     }
     if (json['activites'] != null) {
@@ -129,7 +135,15 @@ class Board {
     if (this._modules != null) {
       data['modules'] = this._modules.map((v) => v.toJson()).toList();
     }
+    if (this._notes != null) {
+      data['notes'] = this._notes.map((v) => v.toJson()).toList();
+    }
     return data;
+  }
+
+  Activites getNextEvent() {
+    return this.activites.firstWhere((event) => event.timelineBarre == "0.0000",
+        orElse: () => null);
   }
 }
 
@@ -139,7 +153,7 @@ class Projets {
   String _timelineStart;
   String _timelineEnd;
   String _timelineBarre;
-  bool _dateInscription;
+  var _dateInscription;
   String _idActivite;
   bool _soutenanceName;
   bool _soutenanceLink;
@@ -181,8 +195,8 @@ class Projets {
   set timelineEnd(String timelineEnd) => _timelineEnd = timelineEnd;
   String get timelineBarre => _timelineBarre;
   set timelineBarre(String timelineBarre) => _timelineBarre = timelineBarre;
-  bool get dateInscription => _dateInscription;
-  set dateInscription(bool dateInscription) =>
+  dynamic get dateInscription => _dateInscription;
+  set dateInscription(var dateInscription) =>
       _dateInscription = dateInscription;
   String get idActivite => _idActivite;
   set idActivite(String idActivite) => _idActivite = idActivite;
@@ -223,6 +237,45 @@ class Projets {
     data['soutenance_link'] = this._soutenanceLink;
     data['soutenance_date'] = this._soutenanceDate;
     data['soutenance_salle'] = this._soutenanceSalle;
+    return data;
+  }
+}
+
+class Notes {
+  String _title;
+  String _titleLink;
+  String _note;
+  String _noteur;
+
+  Notes({String title, String titleLink, String note, String noteur}) {
+    this._title = title;
+    this._titleLink = titleLink;
+    this._note = note;
+    this._noteur = noteur;
+  }
+
+  String get title => _title;
+  set title(String title) => _title = title;
+  String get titleLink => _titleLink;
+  set titleLink(String titleLink) => _titleLink = titleLink;
+  String get note => _note;
+  set note(String note) => _note = note;
+  String get noteur => _noteur;
+  set noteur(String noteur) => _noteur = noteur;
+
+  Notes.fromJson(Map<String, dynamic> json) {
+    _title = json['title'];
+    _titleLink = json['title_link'];
+    _note = json['note'];
+    _noteur = json['noteur'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['title'] = this._title;
+    data['title_link'] = this._titleLink;
+    data['note'] = this._note;
+    data['noteur'] = this._noteur;
     return data;
   }
 }
@@ -338,6 +391,10 @@ class Activites {
     data['token_link'] = this._tokenLink;
     data['register_link'] = this._registerLink;
     return data;
+  }
+
+  String getEndHour() {
+    return this.timelineEnd.substring(this.timelineEnd.indexOf(',') + 2);
   }
 }
 
@@ -539,7 +596,7 @@ class Current {
   String _currentCycle;
   String _semesterCode;
   String _semesterNum;
-  Null _activeLog;
+  String _activeLog;
 
   Current(
       {String creditsMin,
@@ -554,7 +611,7 @@ class Current {
       String currentCycle,
       String semesterCode,
       String semesterNum,
-      Null activeLog}) {
+      String activeLog}) {
     this._creditsMin = creditsMin;
     this._creditsNorm = creditsNorm;
     this._creditsObj = creditsObj;
@@ -594,8 +651,8 @@ class Current {
   set semesterCode(String semesterCode) => _semesterCode = semesterCode;
   String get semesterNum => _semesterNum;
   set semesterNum(String semesterNum) => _semesterNum = semesterNum;
-  Null get activeLog => _activeLog;
-  set activeLog(Null activeLog) => _activeLog = activeLog;
+  String get activeLog => _activeLog;
+  set activeLog(String activeLog) => _activeLog = activeLog;
 
   Current.fromJson(Map<String, dynamic> json) {
     _creditsMin = json['credits_min'];

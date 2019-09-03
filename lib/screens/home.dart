@@ -41,39 +41,46 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return ScopedModel<StudentInfoModel>(
       model: _user,
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 2.0,
-          title: Text(
-            'Epiboard',
-            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 30.0),
+      child: ScopedModel<GeneralInfoModel>(
+        model: _general,
+        child: Scaffold(
+          appBar: AppBar(
+            elevation: 2.0,
+            title: Text(
+              'Epiboard',
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 30.0),
+            ),
+            actions: <Widget>[
+              Container(
+                  margin: EdgeInsets.only(right: 8.0),
+                  child: IconButton(
+                    icon: Icon(Icons.settings),
+                    tooltip: "Settings",
+                    onPressed: () => Navigator.pushNamed(context, '/settings'),
+                  )),
+            ],
           ),
-          actions: <Widget>[
-            Container(
-                margin: EdgeInsets.only(right: 8.0),
-                child: IconButton(
-                  icon: Icon(Icons.settings),
-                  tooltip: "Settings",
-                  onPressed: () => Navigator.pushNamed(context, '/settings'),
-                )),
-          ],
-        ),
-        body: ScopedModelDescendant<StudentInfoModel>(
-          builder: (context, child, user) {
-            this._user = user;
-            return FutureBuilder(
-              future: refreshInfo(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return _dashboard(context);
-                } else {
-                  return Center(
-                    child: new LinearProgressIndicator(),
-                  );
-                }
-              },
-            );
-          },
+          body: ScopedModelDescendant<StudentInfoModel>(
+            builder: (context, child, user) {
+              this._user = user;
+              return ScopedModelDescendant<GeneralInfoModel>(
+                  builder: (context, child, general) {
+                this._general = general;
+                return FutureBuilder(
+                  future: refreshInfo(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return _dashboard(context);
+                    } else {
+                      return Center(
+                        child: new LinearProgressIndicator(),
+                      );
+                    }
+                  },
+                );
+              });
+            },
+          ),
         ),
       ),
     );
@@ -168,9 +175,24 @@ class _HomeState extends State<Home> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          'Next Event',
+                          'Next activity',
                           style: TextStyle(
                               fontWeight: FontWeight.w700, fontSize: 24.0),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                        ),
+                        Text(
+                          _general.board.getNextEvent().title,
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        Text(
+                          _general.board.getNextEvent().salle,
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        Text(
+                          "${_general.board.getNextEvent().timelineStart} - ${_general.board.getNextEvent().getEndHour()}",
+                          style: TextStyle(fontSize: 14),
                         ),
                       ],
                     ),
@@ -185,7 +207,7 @@ class _HomeState extends State<Home> {
         StaggeredTile.extent(2, 110.0),
         StaggeredTile.extent(1, 180.0),
         StaggeredTile.extent(1, 180.0),
-        StaggeredTile.extent(2, 100.0),
+        StaggeredTile.extent(2, 150.0),
       ],
     );
   }
