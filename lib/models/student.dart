@@ -9,14 +9,11 @@ class StudentInfoModel extends Model {
   Userinfo _userinfo;
   bool _referentUsed;
   String _picture;
-  Null _pictureFun;
   String _scolaryear;
   int _promo;
   int _semester;
   String _location;
   String _documents;
-  Null _userdocs;
-  Null _shell;
   bool _close;
   String _ctime;
   String _mtime;
@@ -35,10 +32,8 @@ class StudentInfoModel extends Model {
   bool _editable;
   bool _restrictprofiles;
   List<Groups> _groups;
-  List<Null> _events;
   int _credits;
   List<Gpa> _gpa;
-  Null _spice;
 
   StudentInfoModel(
       {String login,
@@ -55,8 +50,6 @@ class StudentInfoModel extends Model {
       int semester,
       String location,
       String documents,
-      Null userdocs,
-      Null shell,
       bool close,
       String ctime,
       String mtime,
@@ -75,10 +68,8 @@ class StudentInfoModel extends Model {
       bool editable,
       bool restrictprofiles,
       List<Groups> groups,
-      List<Null> events,
       int credits,
-      List<Gpa> gpa,
-      Null spice}) {
+      List<Gpa> gpa}) {
     this._login = login;
     this._title = title;
     this._internalEmail = internalEmail;
@@ -87,14 +78,11 @@ class StudentInfoModel extends Model {
     this._userinfo = userinfo;
     this._referentUsed = referentUsed;
     this._picture = picture;
-    this._pictureFun = pictureFun;
     this._scolaryear = scolaryear;
     this._promo = promo;
     this._semester = semester;
     this._location = location;
     this._documents = documents;
-    this._userdocs = userdocs;
-    this._shell = shell;
     this._close = close;
     this._ctime = ctime;
     this._mtime = mtime;
@@ -113,10 +101,8 @@ class StudentInfoModel extends Model {
     this._editable = editable;
     this._restrictprofiles = restrictprofiles;
     this._groups = groups;
-    this._events = events;
     this._credits = credits;
     this._gpa = gpa;
-    this._spice = spice;
   }
 
   String get login => _login;
@@ -135,8 +121,6 @@ class StudentInfoModel extends Model {
   set referentUsed(bool referentUsed) => _referentUsed = referentUsed;
   String get picture => _picture;
   set picture(String picture) => _picture = picture;
-  Null get pictureFun => _pictureFun;
-  set pictureFun(Null pictureFun) => _pictureFun = pictureFun;
   String get scolaryear => _scolaryear;
   set scolaryear(String scolaryear) => _scolaryear = scolaryear;
   int get promo => _promo;
@@ -147,10 +131,6 @@ class StudentInfoModel extends Model {
   set location(String location) => _location = location;
   String get documents => _documents;
   set documents(String documents) => _documents = documents;
-  Null get userdocs => _userdocs;
-  set userdocs(Null userdocs) => _userdocs = userdocs;
-  Null get shell => _shell;
-  set shell(Null shell) => _shell = shell;
   bool get close => _close;
   set close(bool close) => _close = close;
   String get ctime => _ctime;
@@ -188,14 +168,10 @@ class StudentInfoModel extends Model {
       _restrictprofiles = restrictprofiles;
   List<Groups> get groups => _groups;
   set groups(List<Groups> groups) => _groups = groups;
-  List<Null> get events => _events;
-  set events(List<Null> events) => _events = events;
   int get credits => _credits;
   set credits(int credits) => _credits = credits;
   List<Gpa> get gpa => _gpa;
   set gpa(List<Gpa> gpa) => _gpa = gpa;
-  Null get spice => _spice;
-  set spice(Null spice) => _spice = spice;
 
   StudentInfoModel.fromJson(Map<String, dynamic> json) {
     _login = json['login'];
@@ -208,14 +184,11 @@ class StudentInfoModel extends Model {
         : null;
     _referentUsed = json['referent_used'];
     _picture = json['picture'];
-    _pictureFun = json['picture_fun'];
     _scolaryear = json['scolaryear'];
     _promo = json['promo'];
     _semester = json['semester'];
     _location = json['location'];
     _documents = json['documents'];
-    _userdocs = json['userdocs'];
-    _shell = json['shell'];
     _close = json['close'];
     _ctime = json['ctime'];
     _mtime = json['mtime'];
@@ -246,7 +219,6 @@ class StudentInfoModel extends Model {
         _gpa.add(new Gpa.fromJson(v));
       });
     }
-    _spice = json['spice'];
   }
 
   Map<String, dynamic> toJson() {
@@ -261,14 +233,11 @@ class StudentInfoModel extends Model {
     }
     data['referent_used'] = this._referentUsed;
     data['picture'] = this._picture;
-    data['picture_fun'] = this._pictureFun;
     data['scolaryear'] = this._scolaryear;
     data['promo'] = this._promo;
     data['semester'] = this._semester;
     data['location'] = this._location;
     data['documents'] = this._documents;
-    data['userdocs'] = this._userdocs;
-    data['shell'] = this._shell;
     data['close'] = this._close;
     data['ctime'] = this._ctime;
     data['mtime'] = this._mtime;
@@ -293,7 +262,6 @@ class StudentInfoModel extends Model {
     if (this._gpa != null) {
       data['gpa'] = this._gpa.map((v) => v.toJson()).toList();
     }
-    data['spice'] = this._spice;
     return data;
   }
 }
