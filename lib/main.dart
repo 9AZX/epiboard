@@ -5,6 +5,7 @@ import './screens/login.dart';
 import './screens/office365.dart';
 import './screens/home.dart';
 import './screens/settings.dart';
+import './screens/calendar.dart';
 
 void main() => runApp(MyApp());
 
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/office': (context) => Office365(),
         '/home': (context) => Home(),
         '/settings': (context) => Settings(),
+        '/calendar': (context) => Calendar(),
       },
       debugShowCheckedModeBanner: false,
     );

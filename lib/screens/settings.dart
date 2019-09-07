@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 class Settings extends StatefulWidget {
   Settings({Key key}) : super(key: key);

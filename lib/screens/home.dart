@@ -5,16 +5,35 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../api/intra.dart';
 import '../models/student.dart';
 import '../models/general.dart';
+import './calendar.dart';
 
 class Home extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
+  TabController _dataController;
   IntraApiService _api = new IntraApiService();
   StudentInfoModel _user = new StudentInfoModel();
   GeneralInfoModel _general = new GeneralInfoModel();
+
+  VoidCallback onChangeTab;
+
+  @override
+  void initState() {
+    _dataController = TabController(length: 2, vsync: this, initialIndex: 0);
+
+    _dataController.addListener(onChangeTab);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _dataController.dispose();
+    super.dispose();
+  }
 
   refreshInfo() async {
     Map<String, dynamic> jsonUser = await _api.userInfo();
@@ -28,22 +47,13 @@ class _HomeState extends State<Home> {
   }
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return ScopedModel<StudentInfoModel>(
       model: _user,
       child: ScopedModel<GeneralInfoModel>(
         model: _general,
         child: Scaffold(
+          bottomNavigationBar: _TabBar(_dataController),
           appBar: AppBar(
             elevation: 2.0,
             title: Text(
@@ -223,6 +233,50 @@ class _HomeState extends State<Home> {
                   print('Not set yet');
                 },
           child: child),
+    );
+  }
+}
+
+class TabBarViewWidgets extends StatefulWidget {
+  final TabController _dataController;
+
+  const TabBarViewWidgets(this._dataController);
+
+  _TabBarViewWidgetsState createState() => _TabBarViewWidgetsState();
+}
+
+class _TabBarViewWidgetsState extends State<TabBarViewWidgets> {
+  @override
+  Widget build(BuildContext context) {
+    return TabBarView(
+      physics: NeverScrollableScrollPhysics(),
+      children: <Widget>[
+        Home(),
+        Calendar(),
+      ],
+      controller: widget._dataController,
+    );
+  }
+}
+
+class _TabBar extends StatefulWidget {
+  final TabController _dataController;
+
+  const _TabBar(this._dataController);
+
+  @override
+  __TabBarState createState() => __TabBarState();
+}
+
+class __TabBarState extends State<_TabBar> {
+  @override
+  Widget build(BuildContext context) {
+    return TabBar(
+      tabs: <Widget>[
+        Tab(icon: Icon(Icons.home, color: Colors.black)),
+        Tab(icon: Icon(Icons.calendar_today, color: Colors.black)),
+      ],
+      controller: widget._dataController,
     );
   }
 }
