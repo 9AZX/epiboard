@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class IntraApiService {
   static var _baseUrl = "https://intra.epitech.eu/";
@@ -15,12 +16,22 @@ class IntraApiService {
     }
   }
 
-  Future<bool> userInfo() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    String autologin = prefs.getString('autologin') ?? false;
+  Future<Map<String, dynamic>> userInfo() async {
+    String autologin = await getAutologin();
     var response = await http.get(autologin + "/user/?format=json");
 
-    return true;
+    return json.decode(response.body);
+  }
+
+  Future<Map<String, dynamic>> generalInfo() async {
+    String autologin = await getAutologin();
+    var response = await http.get(autologin + "/?format=json");
+
+    return json.decode(response.body);
+  }
+
+  Future<String> getAutologin() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('autologin') ?? false;
   }
 }

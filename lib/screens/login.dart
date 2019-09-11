@@ -18,7 +18,7 @@ class _LoginState extends State<Login> {
     IntraApiService().autoLogin(autolog).then((value) {
       if (value) {
         connectionResult = true;
-        Navigator.pushNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/home');
       }
     });
     return connectionResult;
@@ -89,7 +89,7 @@ class _LoginState extends State<Login> {
                       child: RaisedButton(
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
-                            Navigator.pushNamed(context, '/home');
+                            Navigator.pushReplacementNamed(context, '/home');
                           }
                         },
                         child: Text('Connect'),
